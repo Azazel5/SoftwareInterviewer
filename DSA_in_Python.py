@@ -38,3 +38,39 @@ print(set(dict(mappings)) & set(new_dict))
 # When we pass parameters to functions, Python makes aliases from the actually passed parameters to the formal
 # parameters. This has consequences when the parameters are mutable, as the states of the parameters may change.
 # We can enforce function parameters to become keyword arguments
+
+# It is customary to check the type of parameter first and then the value
+# We can catch more than one type of exception: except (IOError, ValueError). Or we can break it up into 
+# multiple except blocks
+
+# Iterables are lazily constructed. range(100000) will not set aside memory for 100000 numbers immediately
+# It'll only do that as required. However, list(range(100000)) will. Many python library functions operate
+# this way for the sake of efficiency
+
+# Create iterators through generators! A function that yields instead of returning. 
+
+def traditional(n):
+    li = []
+
+    for i in range(1, n + 1):
+        if n % i == 0:
+            li.append(i)
+
+    return li
+
+def generator(n):
+    for i in range(1, n+ 1):
+        if n % i == 0:
+            yield i
+
+# This returns a generator object which can be constructed into a list by the list() constructor. We can have multiple
+# yields to a single function
+
+# dir() and vars() are ways to check namespaces and attributes
+
+# Top level commands of a module are executed when you import it, causing the issues you saw several years ago in the
+# stock program you wrote. This is the reason why we use if __name__ == "__main__". It is also used while unittesting.
+
+# Object Oriented Programming
+
+# Methods of a class starting with _ are assumed to be private. 
