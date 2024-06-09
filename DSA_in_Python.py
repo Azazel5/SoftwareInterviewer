@@ -73,4 +73,37 @@ def generator(n):
 
 # Object Oriented Programming
 
-# Methods of a class starting with _ are assumed to be private. 
+# Methods of a class starting with _ are assumed to be protected and __ are private
+
+# We can overload operators in class definitions to make things like Class1 + Class2 make sense through methods like
+# __add__ or __mul__. All operators have an equivalent function, even things like indexing
+
+class Range:
+    def __init__(self, start, stop=None, step=1):
+        if step == 0:
+            raise ValueError("Step cannot be 0")
+        
+        if stop == None:
+            start, step = 0, start
+
+        self._start = start
+        self._step = step
+        self._length = max(0, (stop - start + step - 1 // step))
+
+    def __len__(self):
+        return self._length
+    
+    def __getitem__(self, k):
+        if k < 0:
+            k += self._length
+
+        if not 0 <= k < self._length:
+            raise IndexError("Index not in range")
+        
+        return self._start + k * self.step
+    
+# Be careful about creating shallow copies. Use the copy module to create deep copies
+
+        
+
+    
