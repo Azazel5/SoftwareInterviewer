@@ -104,6 +104,40 @@ class Range:
     
 # Be careful about creating shallow copies. Use the copy module to create deep copies
 
-        
+# Algorithm Analysis
 
-    
+# We can use time.time() before and after the algorithm finishes running but this is not going to be
+# acccurate as it will depend on what other processes are running on the computer at that time. A more
+# accurate, but still not perfect metric, would be the use of the clock() function which measures CPU
+# cycles. The biggest difficulty of using experimental analysis is that we would need to implement
+# various algorithms to analyze their runtimes, which is a significant time waster
+
+# An alogorithm's number of primitive operations is proportional to the runtime
+# Since determining average runtime requires a more complicated approach, most runtime analysis focuses
+# on worst case and best case behaviors. 
+
+# 7 functions for algorithmic analysis
+# Constant function, f(x) = c. It doesn't matter what the input is, the function takes a set amount of
+# time
+
+# Logarithmic function, f(x) = log(b)(n) [log n <= n]
+
+# Linear function, f(x) = x
+
+# nLogn function, f(x) = xlog(x) [the fastest possible algorithm for sorting follows this runtime]
+
+# Quadratic function, f(x) = x^2
+
+# Cubic function, f(x) = x^3
+
+# Exponential function. f(x) = b^x
+
+# Big O notation allows us to ignore primitive, constant operations and focus on the things that affect the
+# algorithm's runtime the most: higher order operations.
+
+# Big O = less than or equal to
+# Big Omega = greater than or equal to
+# Big theta = at the same rate
+
+# Even if we're abstracting away the constant factors and lower order terms, it is still important to be mindful
+# of them as, in some scenarios, they will make a significant difference.
