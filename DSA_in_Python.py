@@ -141,3 +141,78 @@ class Range:
 
 # Even if we're abstracting away the constant factors and lower order terms, it is still important to be mindful
 # of them as, in some scenarios, they will make a significant difference.
+
+# The mathematical definition of big O notation is that f(x) <= cg(n) for n >= n0. For a certain input size, g(n)
+# is greater than f(x) so f(x) is O(g(n)), big O of g(n), f(x) is guaranteed to be lower than g(x) for that input and
+# above
+
+# One algorithm is asymptotically greater than another if we compare runtimes and one runs in the order of n and the
+# other log(n) for example
+
+# Be aware of list slicing techniques as they may seem to be more efficient - they certainly take up less space - but
+# it also does looping
+
+# N^2 implementation
+def prefix1(arr):
+    A = [0] * len(arr)
+
+    for i in range(5):
+        running_sum = 0
+
+        for j in range(i):
+            running_sum += arr[j]   
+
+        A[j] = running_sum / len(A)
+
+    return A
+
+# N implementation
+def prefix2(arr):
+    A = [0] * len(arr)
+    total = 0
+
+    for i in range(len(arr)):
+        total += arr[i]
+        A[i] = arr[i] / (i + 1)
+
+    return A
+
+# Mathematical statements can be proved by induction, contrapoitve, or contradiction
+
+### Recursion
+
+def facorial_recursive(num):
+    if num == 0:
+        return 1
+    else:
+        return num * facorial_recursive(num - 1)
+
+# For binary search to work, we need to have the elements saved in sorted order.
+
+def binary_search(data, target, low, high):
+    if low > high:
+        return False
+    
+    mid = (high + low) // 2
+    
+    if data[mid] == target:
+        return True
+    elif data[mid] < target:
+        binary_search(data, target, mid + 1, high)
+
+    elif data[mid] > target:
+        binary_search(data, target, low, mid - 1)
+
+# Alright, so recursive algorithms are a great way to solve difficult problems. But how do we measure its
+# efficiency? You take a look at how many times the function needs to call itself and what the contents
+# of the function body is doing in each activation call. For instance, in the factorial problem, we have
+# a constant operation occuring n times, so it is O(n)
+
+#########   DATA STRUCTURES      ######### 
+
+# Arrays 
+
+# In an array, each block of memory for each elements to have the same size. But different numerals or strings
+# have different lengths and thus different memory. Python solves this problem by only holding the reference
+# addresses to each element of the list. The bit of reference addresses take up the same amount of memory so
+# it works out
