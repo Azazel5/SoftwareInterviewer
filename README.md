@@ -1,6 +1,6 @@
 ## The Core Philosophy
 
-The reason people fail interviews isn't lack of pattern knowledge—it's that under pressure, they can't decompose problems or reason about tradeoffs. We're going to train those mental muscles directly.
+The reason people fail interviews isn't lack of pattern knowledge; it's that under pressure, they can't decompose problems or reason about tradeoffs. We're going to train those mental muscles directly.
 
 ### The 8-Week Transformation Plan
 
@@ -30,8 +30,11 @@ This trains you to immediately know what complexity you're aiming for
 Verbalization Practice (30 min):
 
 *Solve 1 easy problem while explaining your thought process OUT LOUD*
+
 Record yourself or explain to a rubber duck
+
 This simulates interview pressure and exposes gaps in your reasoning
+
 Why this works: You're training the meta-skill of problem-solving, not memorizing solutions.
 
 **Week 3-4: Master the Fundamental Patterns (But Properly)**
@@ -144,6 +147,9 @@ Write a short explanation of each pattern you learn
 Explain problems to others (or your rubber duck)
 Teaching forces real understanding
 Measuring Progress
+
+## The ideal timeline
+
 Week 2: You should be able to identify 2-3 possible approaches for most medium problems before coding
 
 Week 4: You should recognize the pattern in 70% of problems within 2 minutes
@@ -164,3 +170,43 @@ Your Own Problem Journal (most important—write down your insights)
 You've got 8 weeks to transform. The key isn't volume—it's intentional practice on the skills that actually matter in interviews.
 
 You've failed before because you didn't have a system. Now you have one. Execute it.
+
+
+## Template for a problem
+
+
+Leetcode Problem Number. Problem Title
+
+
+
+My solution notes 
+-----------------
+
+
+
+Consulting notes
+----------------
+
+
+Actual solution notes
+---------------------
+
+PATTERN RECOGNITION
+-------------------
+
+
+VARIATIONS I COULD HANDLE
+-------------------------
+
+
+COMPLEXITY ANALYSIS
+-------------------
+
+
+EDGE CASES HANDLED
+------------------
+
+
+MISTAKES I MADE
+---------------
+
