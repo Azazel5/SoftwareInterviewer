@@ -226,9 +226,85 @@ complexity because if the tree becomes large enough, the call stack will be over
 PATTERN RECOGNITION
 -------------------
 
+Core Pattern: "Recursive Tree Aggregation" (DFS post-order with return value)
+
+Recognition Signals:
+- "Maximum/minimum of entire tree" → recurse both subtrees, compare results
+- "Depth/height/level" → count as you recurse
+- "Find property across whole tree" → aggregate from children upward
+
+This EXACT pattern appears in:
+- Minimum Depth of Binary Tree (same logic, use min instead of max)
+- Diameter of Binary Tree (max of left + right depths at each node)
+- Balanced Binary Tree (check if |left_depth - right_depth| <= 1)
+- Binary Tree Maximum Path Sum (aggregate values instead of counts)
+
+Key insight: When aggregating a property from entire tree:
+1. Get property from left subtree (recursive call)
+2. Get property from right subtree (recursive call)
+3. Combine them at current node (max, min, sum, etc.)
+4. Return the result upward
+
+Related patterns:
+- Tree modification (Invert Tree): swap then recurse
+- Tree aggregation (this problem): recurse then combine
+- Tree search (Find value): recurse with early termination
 
 VARIATIONS I COULD HANDLE
 -------------------------
+
+Easy modifications:
+1. Minimum depth (shortest root-to-leaf path)
+   → Use min(left, right) but careful: if one child is None, 
+     must use the other (can't stop at non-leaf nodes)
+   
+2. Count total number of nodes
+   → return 1 + countNodes(left) + countNodes(right)
+   
+3. Sum of all node values
+   → return root.val + sum(left) + sum(right)
+
+Medium modifications:
+4. Check if tree is balanced (LC 110)
+   → At each node, check if |left_depth - right_depth| <= 1
+   → Must check ALL nodes, not just root
+   
+5. Diameter of tree (longest path between any two nodes)
+   → At each node: diameter = left_depth + right_depth
+   → Track global maximum as you recurse
+   
+6. Maximum depth with constraint (e.g., path sum equals target)
+   → Add condition before counting depth
+   
+7. Return the actual path, not just depth
+   → Track path in parameter, return when depth is max
+
+Hard modifications:
+8. Width of tree at each level
+   → Need BFS or DFS with level tracking
+   → Return max width across all levels
+   
+9. Maximum depth in N-ary tree
+   → return 1 + max(depth of all children)
+   → Need to iterate through list of children
+   
+10. Depth of deepest odd-level leaf
+    → Add level parameter, filter for odd levels
+
+Follow-up questions you might get:
+- "What if I want minimum depth instead?"
+  → Same structure but use min() - BUT watch for None children
+  
+- "Can you do this iteratively?"
+  → Yes, BFS tracking level, or DFS with stack storing (node, depth)
+  
+- "What's the time/space complexity?"
+  → Time O(n) - visit every node once
+  → Space O(h) - recursion stack depth = tree height
+  
+- "What if tree is extremely unbalanced?"
+  → Recursion depth could cause stack overflow
+  → Use iterative approach with explicit stack
 
 
 COMPLEXITY ANALYSIS
