@@ -342,3 +342,212 @@ def maxDepth(self, root: Optional[TreeNode]) -> int:
    right = self.maxDepth(root.right)
 
    return 1 + max(left, right)
+
+
+"""
+543. Diameter of Binary Tree
+
+
+Okay, this problem is kind of similar to the maximum depth problem, but it is different in some ways:
+
+1. It is not necessary for the path to pass the node
+2. It seems like the end points of the paths need not be leaf nodes, although they can be. But wait, if they're
+not leaf nodes, there'll always be a bigger diameter. It seems my original thought may be a misconception, have to check
+
+
+My solution notes 
+-----------------
+
+Find the deepest leaf node. And then traverse a path from it to... another node?
+I am trying to do post-order DFS, but I mean I can code it, sure? But the goal isn't just to do post-order, it's to 
+track the number of edges traversed too. Actually I need to start tracking it from the deepest point, not from the 
+root
+
+Trying to output the deepest node on the left hand side, failing. 
+
+
+Consulting notes
+----------------
+
+I consulted with an LLM regarding point 2 and it seems my intuitive proof by contradiction was right. The path must be 
+between two leaf nodes, otherwise either end can be extended by 1, making it not the longest path between any 2 nodes 
+any more. 
+
+
+Actual solution notes
+---------------------
+
+Recurse all the way to the root at the left hand side. Then recurse to the right side. If the leaf's child has been
+reached (a None node) return 0. This is the base case. There will be two updates to be made: diameter and return
+statement. The diameter update will keep the max between whatever diameter is and what left + right returned. Now let's
+think about the return statement, without which we cannot think about how to answer this question. For the leaf, left and
+right will be 0. So we return the max of left, right and add one. 
+
+Is there a case where left and right can have different values, why we need to take the max here? 
+
+Why left and right can be different:
+- Trees are rarely perfectly balanced
+- One subtree might be deeper than the other
+- Example: left subtree has height 3, right has height 1
+- We return 1 + max(3, 1) = 4 to the parent
+
+Key insight: We're calculating TWO different things:
+- Diameter (horizontal path): left + right (both branches)
+- Height (vertical path): 1 + max(left, right) (deeper branch only)
+
+
+PATTERN RECOGNITION
+-------------------
+
+Core Pattern: "Tree Property with Global Tracking" (DFS with side effect)
+
+Recognition Signals:
+- "Longest/maximum path in tree" → check at every node, track global max
+- "Between ANY two nodes" → can't just check root, need full traversal
+- "Property depends on subtree info" → need return values from recursion
+
+This pattern appears in:
+- Binary Tree Maximum Path Sum (LC 124) - same structure, track sum
+- Longest Univalue Path (LC 687) - track path with same values
+- Time Needed to Inform All Employees (LC 1376) - track max time path
+- Longest ZigZag Path in Binary Tree (LC 1372) - similar global tracking
+
+Variations of this pattern:
+- Calculate property at each node using subtree info
+- Track global max/min/sum as you go
+- Return different value than what you're tracking
+
+Key distinction from simple aggregation:
+- Max Depth: just return aggregated value
+- Diameter: return one thing (height), track another (diameter)
+
+The "two values" pattern:
+- What you TRACK (the answer): left + right
+- What you RETURN (for parent): 1 + max(left, right)
+
+
+VARIATIONS I COULD HANDLE
+-------------------------
+
+Easy modifications:
+1. Diameter of N-ary tree
+   → Find two deepest children, sum their depths
+   → Need to sort/find top 2 among all children
+   
+2. Count nodes along diameter path
+   → Instead of edges (left + right), count nodes (left + right + 1)
+   
+3. Return the actual path, not just length
+   → Track path as you recurse, return when diameter is found
+
+Medium modifications:
+4. Binary Tree Maximum Path Sum (LC 124)
+   → Same structure, but track sum instead of length
+   → At each node: max(diameter, node.val + left_sum + right_sum)
+   → Can choose to not include negative paths (max with 0)
+   
+5. Longest Univalue Path (LC 687)
+   → Only count edges where both nodes have same value
+   → Need to check node.val == child.val before adding
+   
+6. Diameter with weighted edges
+   → Each edge has a weight/cost
+   → Sum weights instead of counting edges
+   
+7. Find all paths with length equal to diameter
+   → Track paths, not just length
+   → Return list of paths that match max length
+
+Hard modifications:
+8. Diameter in graph (not tree)
+   → Need visited set to avoid cycles
+   → DFS from each node, track max distance
+   
+9. K-diameter (K longest non-overlapping paths)
+   → Need to track multiple paths
+   → Ensure they don't share edges
+   
+10. Diameter with node constraints
+    → "Find diameter where all nodes in path have value > X"
+    → Add conditional logic in recursion
+
+Follow-up questions you might get:
+- "What if I want the actual path, not just length?"
+  → Track nodes as you recurse, return path when max is found
+  
+- "Can you do this iteratively?"
+  → Harder. Need to do DFS iteratively while tracking depths
+  → Use stack with (node, depth) pairs
+  
+- "What if edges have weights?"
+  → Same logic, but sum weights instead of counting edges
+  
+- "Does the path have to be between leaf nodes?"
+  → Actually no! If extending further decreases value (like in
+     path sum problems), non-leaf endpoints are possible
+
+Common interview traps:
+- Thinking diameter always goes through root (it doesn't!)
+- Confusing diameter (left + right) with height (1 + max)
+- Trying to pass mutable values as parameters (use self or nonlocal)
+- Forgetting to check diameter at EVERY node
+- Not handling single-node tree (diameter = 0)
+
+Real interview follow-ups I've seen:
+1. "Optimize for very unbalanced trees"
+   → Same O(n), but could track if subtree is linear for early pruning
+   
+2. "What if tree has 10 million nodes?"
+   → Still O(n) time, O(h) space. If balanced, stack is fine.
+     If skewed, might overflow stack → use iterative
+   
+3. "Find second-longest diameter"
+   → Track top 2 diameters as you go
+
+
+COMPLEXITY ANALYSIS
+-------------------
+
+This will be the exact same as maxDepth. Because we're doing a full DFS here to try and find the deepest two leaf 
+nodes
+
+Time: O(n) where n = number of nodes
+- Visit each node exactly once in DFS
+- At each node: O(1) work (comparison, addition)
+- No repeated work, no backtracking
+
+Space: O(h) where h = height of tree
+- Recursion call stack depth = height
+- Best case (balanced): O(log n)
+- Worst case (skewed): O(n)
+- Plus O(1) for tracking diameter variable
+
+Comparison with max depth:
+- Same time complexity: O(n)
+- Same space complexity: O(h)
+- Same traversal pattern: post-order DFS
+- Difference: this tracks additional global variable
+
+
+EDGE CASES HANDLED
+------------------
+
+An empty tree
+
+
+MISTAKES I MADE
+---------------
+
+Remember that in Python, integers are immutable. When you pass integer values to recursive functions, it is treated
+like a local variable. Create a class instance variable
+
+The return statement 1 + max(left, right) returns HEIGHT for parent's calculation. The parent needs to know: how deep
+can I go into the subtree, that's the return statement. The diameter update is the path length through this particular node
+
+
+"""
+
+# Review Queue:
+# 1. Invert Binary Tree (review on Oct 22, Wednesday, 2025)
+# 2. Maximum Depth of Binary Tree (review on Oct 23, Thursday, 2025)
+# 3. Diameter of Binary Tree (review on October 24, Friday, 2025)

@@ -271,4 +271,4 @@ value
 
 
 # Review Queue:
-# 1. Reverse Linked list (review^)
+# 1. Reverse Linked list (review on Oct 22, Wednesday, 2025)
