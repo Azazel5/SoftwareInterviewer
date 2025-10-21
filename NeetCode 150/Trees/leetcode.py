@@ -1,10 +1,10 @@
 from typing import Optional
 
 class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
+   def __init__(self, val=0, left=None, right=None):
+      self.val = val
+      self.left = left
+      self.right = right
 
 """
 226. Invert Binary Tree
@@ -162,12 +162,12 @@ recursive. For THIS problem, both work fine.
 
 
 def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        if not root:
-            return root
+   if not root:
+      return root
 
 
-        root.left, root.right = self.invertTree(root.right), self.invertTree(root.left)
-        return root
+   root.left, root.right = self.invertTree(root.right), self.invertTree(root.left)
+   return root
 
 
 """
@@ -335,10 +335,10 @@ really helps
 """
 
 def maxDepth(self, root: Optional[TreeNode]) -> int:
-        if not root:
-            return 0
+   if not root:
+      return 0
 
-        left = self.maxDepth(root.left)
-        right = self.maxDepth(root.right)
+   left = self.maxDepth(root.left)
+   right = self.maxDepth(root.right)
 
-        return 1 + max(left, right)
+   return 1 + max(left, right)

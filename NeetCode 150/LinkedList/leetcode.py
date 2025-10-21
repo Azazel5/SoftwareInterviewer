@@ -1,9 +1,9 @@
 from typing import Optional
 
 class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
+   def __init__(self, val=0, next=None):
+      self.val = val
+      self.next = next
 
 
 """
@@ -98,16 +98,16 @@ to actually do in this problem, just flip the orientation of the next's
 """
 
 def reverseList(head: Optional[ListNode]) -> Optional[ListNode]:
-    curr = head
-    prev = None
+   curr = head
+   prev = None
 
-    while curr:
-        next_ = curr.next
-        curr.next = prev
-        prev = curr
-        curr = next_
+   while curr:
+      next_ = curr.next
+      curr.next = prev
+      prev = curr
+      curr = next_
 
-    return prev
+   return prev
 
 
 """
